@@ -17,7 +17,7 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-
+    protected $redirectTo = '/admin/home';
     use AuthenticatesUsers;
 
     /**
@@ -25,7 +25,9 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    
+
+
 
     /**
      * Create a new controller instance.
@@ -35,5 +37,9 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest', ['except' => 'logout']);
+    }
+    public function showLoginForm()
+    {
+        return view('adminthemes.adminlte.login');
     }
 }

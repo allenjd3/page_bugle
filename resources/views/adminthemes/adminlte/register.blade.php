@@ -31,13 +31,21 @@
             <div class="box-header">
               <i class="fa fa-sign-in"></i>
 
-              <h3 class="box-title">Login</h3>
+              <h3 class="box-title">Register</h3>
 
             <div class="box-body login" id="login-box">
               <!-- chat item -->
-              {!! Form::open(['url' => "/admin/login"]) !!}
-                  {{Form::bsText('email','Email')}}
+              {!! Form::open(['url' => "/admin/register"]) !!}
+                  {{Form::bsText('name','Name')}}
+                  {{Form::bsEmail('email', 'Email')}}
                   {{Form::bsPassword('password', 'Password')}}
+                   <div class="form-group">
+                            <label for="password-confirm" class="control-label">Confirm Password</label>
+
+                            
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                            
+                        </div>
                   {{Form::submit('Login', ['class'=>'btn btn-success'])}}
               {!! Form::close() !!}
               <!-- /.item -->
