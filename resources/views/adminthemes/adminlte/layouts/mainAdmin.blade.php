@@ -17,6 +17,16 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="/dist/css/skins/_all-skins.min.css">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="/plugins/iCheck/flat/blue.css">
+  <!-- Morris chart -->
+  <link rel="stylesheet" href="/plugins/morris/morris.css">
+  <!-- jvectormap -->
+  <link rel="stylesheet" href="/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+  <!-- Date Picker -->
+  <link rel="stylesheet" href="/plugins/datepicker/datepicker3.css">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="/plugins/daterangepicker/daterangepicker.css">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
@@ -34,9 +44,9 @@
     <!-- Logo -->
     <a href="/index2.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>A</b>LT</span>
+      <span class="logo-mini"><b><?php $app_name = config('app.name');?>{{substr($app_name, 0, 1)}}</b>{{substr($app_name, -2)}}</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin</b>LTE</span>
+      <span class="logo-lg">{{config('app.name')}}</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -47,35 +57,32 @@
 
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
-          
+          @if(null !== Auth::user())
           <li class="dropdown user user-menu">
             <a href="/#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Alexander Pierce</span>
+              <span class="hidden-xs">
+              
+              {{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}</span>
+              
             </a>
+            
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
                 <img src="/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2012</small>
+                
+                  {{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}
+                
+                  <small>Member since {{null !== Auth::user() ? Auth::user()->created_at->format('M Y') : ''}}</small>
+                  
                 </p>
               </li>
               <!-- Menu Body -->
               <li class="user-body">
-                <div class="row">
-                  <div class="col-xs-4 text-center">
-                    <a href="/#">Followers</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="/#">Sales</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="/#">Friends</a>
-                  </div>
-                </div>
+                
                 <!-- /.row -->
               </li>
               <!-- Menu Footer-->
@@ -84,33 +91,45 @@
                   <a href="/#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="/#" class="btn btn-default btn-flat">Sign out</a>
+                  {!! Form::open(['url'=>'/admin/logout'])!!}
+                  <input type="submit" class="btn btn-default btn-flat" value="Sign out" />
+                  {!! Form::close() !!}
                 </div>
               </li>
             </ul>
+           
           </li>
           <!-- Control Sidebar Toggle Button -->
           <!-- <li>
             <a href="/#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
           </li> -->
+           @else
+                  
+          @endif
         </ul>
       </div>
     </nav>
   </header>
 @section('sidebar')
+@if(null !== Auth::user())
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
       <!-- Sidebar user panel -->
+      
       <div class="user-panel">
         <div class="pull-left image">
           <img src="/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Alexander Pierce</p>
+          <p>
+          
+          {{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}
+          </p>
           <a href="/#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
+      
       <!-- search form -->
       <form action="#" method="get" class="sidebar-form">
         <div class="input-group">
@@ -135,7 +154,9 @@
     </section>
     <!-- /.sidebar -->
   </aside>
-
+  @else
+      
+  @endif
 @show
 @yield('content')
 
@@ -144,7 +165,7 @@
     <div class="pull-right hidden-xs">
       <b>Version</b> 2.3.8
     </div>
-    <strong>Copyright &copy; 2014-2016 <a href="/http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
+    <strong>Copyright &copy; 2014-2016 <a href="/http://almsaeedstudio.com">Almsaeed Studio/ Modified by JDA</a>.</strong> All rights
     reserved.
   </footer>
 
@@ -165,7 +186,27 @@
 </script>
 <!-- Bootstrap 3.3.6 -->
 <script src="/bootstrap/js/bootstrap.min.js"></script>
-
+<!-- Morris.js charts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="/plugins/morris/morris.min.js"></script>
+<!-- Sparkline -->
+<script src="/plugins/sparkline/jquery.sparkline.min.js"></script>
+<!-- jvectormap -->
+<script src="/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+<!-- jQuery Knob Chart -->
+<script src="/plugins/knob/jquery.knob.js"></script>
+<!-- daterangepicker -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+<script src="/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- datepicker -->
+<script src="/plugins/datepicker/bootstrap-datepicker.js"></script>
+<!-- Bootstrap WYSIHTML5 -->
+<script src="/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+<!-- Slimscroll -->
+<script src="/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="/plugins/fastclick/fastclick.js"></script>
 <!-- AdminLTE App -->
 <script src="/dist/js/app.min.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
