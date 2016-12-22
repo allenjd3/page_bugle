@@ -37,7 +37,7 @@ class Kernel extends HttpKernel
             'bindings',
         ],
     ];
-
+    
     /**
      * The application's route middleware.
      *

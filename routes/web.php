@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/home', function () {
-    return view('adminthemes.adminlte.login');
+    return view('adminthemes.adminlte.default');
 });
 
 Route::group(['prefix'=>'admin'], function(){
