@@ -35,10 +35,15 @@
 
             <div class="box-body login" id="login-box">
               <!-- chat item -->
-              {!! Form::open(['url' => "/admin/login"]) !!}
-                  {{Form::bsText('email','Email')}}
-                  {{Form::bsPassword('password', 'Password')}}
-                  {{Form::submit('Login', ['class'=>'btn btn-success'])}}
+              {!! Form::open(['url' => '/admin/login']) !!}
+                {{Form::bsEmail('email', 'Email Address')}}
+                {{Form::bsPassword('password', 'Password')}}
+                <div class="form-group">
+                {{Form::checkbox('remember')}}
+
+                {{Form::label('remember', "Remember Me")}}
+                </div>
+                {{Form::submit('Login', ['class'=>'btn btn-success'])}}
               {!! Form::close() !!}
               <!-- /.item -->
             </div>
